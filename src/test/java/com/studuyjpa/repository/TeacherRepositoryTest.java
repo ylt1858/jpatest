@@ -20,6 +20,8 @@ class TeacherRepositoryTest {
         teacher.setName("test");
         teacher.setPhone("12312344321");
         teacher.setEmail("123@163.com");
+
+
         Teacher save = teacherRepository.save(teacher);
         System.err.println(save);
     }
