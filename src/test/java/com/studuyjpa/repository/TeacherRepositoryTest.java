@@ -15,15 +15,13 @@ class TeacherRepositoryTest {
 
     @Test
     void savaTest() {
-        Teacher teacher = new Teacher();
-        teacher.setId((long) 1);
-        teacher.setName("test");
-        teacher.setPhone("12312344321");
-        teacher.setEmail("123@163.com");
+        for (long a=3;a<10;a++) {
+            Teacher save = teacherRepository.save(
+                    new Teacher(a, "name" + a, "phone" + a, "email" + a)
+            );
+            System.err.println(save);
+        }
 
-
-        Teacher save = teacherRepository.save(teacher);
-        System.err.println(save);
     }
 
     @Test
