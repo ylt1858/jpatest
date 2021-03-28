@@ -38,6 +38,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void deleteTeacher(Teacher teacher) {
-
+        teacherRepository.delete(teacher);
     }
 }

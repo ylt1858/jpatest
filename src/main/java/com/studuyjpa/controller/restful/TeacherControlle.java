@@ -29,4 +29,15 @@ public class TeacherControlle {
         return byId;
     }
 
+    @GetMapping("/deleteTeacher/{id}")
+    public String deleteTeacherById(@PathVariable Long id) {
+        if (teacherService.getById(id) != null){
+            teacherService.deleteTeacher(teacherService.getById(id));
+            return "deleteOk";
+        }
+        else {
+            return "notOk";
+        }
+    }
+
 }
