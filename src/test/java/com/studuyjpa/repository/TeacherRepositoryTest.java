@@ -1,17 +1,22 @@
 package com.studuyjpa.repository;
 
+import com.studuyjpa.entity.Student;
 import com.studuyjpa.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class TeacherRepositoryTest {
 
     @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Test
     void savaTest() {
@@ -32,6 +37,14 @@ class TeacherRepositoryTest {
 
     @Test
     void deleteTeacher() {
-        teacherRepository.deleteById((long) 1);
+        teacherRepository.deleteById(8l);
+    }
+
+    @Test
+    @Transactional
+    public void getTeacherById(){
+        Teacher one = teacherRepository.getOne(1l);
+        one.getStudents().forEach(System.err::println);
+        System.err.println(one.getName());
     }
 }
