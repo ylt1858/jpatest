@@ -83,4 +83,24 @@ class RoleRepositoryTest {
         userRepository.deleteById(3l);
     }
 
+    @Test
+    @Transactional
+    void test5() {
+        User user = userRepository.getOne(3l);
+        Set<Role> roles = user.getRoles();
+        for (Role r:
+             roles) {
+            System.err.println(r);
+        }
+
+    }
+
+    @Test
+    @Transactional//No session
+    void test6() {
+        Role role = roleRepository.getOne(1l);
+        Set<User> users = role.getUsers();
+        users.forEach(System.err::print);
+    }
+
 }
