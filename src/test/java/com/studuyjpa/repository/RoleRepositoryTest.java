@@ -103,4 +103,23 @@ class RoleRepositoryTest {
         users.forEach(System.err::print);
     }
 
+    @Test
+    @Transactional//No session
+    @Rollback(value = false)
+    void test7() {
+        User user = new User();
+        user.setUserId(11l);
+        user.setUsername("name");
+        Role role1 = new Role();
+        role1.setRoleId(11l);
+        Role role2 = new Role();
+        role2.setRoleId(12l);
+        // 空指针问题 多半是Set集合中没有new
+        // private Set<xxx> xxx = new HashSet();
+        user.addRole(role1);
+        user.addRole(role2);
+
+        userRepository.save(user);
+    }
+
 }
