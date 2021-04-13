@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -122,4 +123,22 @@ class RoleRepositoryTest {
         userRepository.save(user);
     }
 
+    @Test
+    @Transactional//No session
+    void test8() {
+        User user = userRepository.getOne(1l);
+        Set<Role> roleSet = new HashSet<>();
+        for (Role r:
+             user.getRoles()) {
+            roleSet.add(r);
+        }
+        roleSet.forEach(System.err::println);
+    }
+
+    @Test
+    @Transactional//No session
+    void test9() {
+        Optional<User> user = userRepository.findById(1l);//getOne()懒加载 findById()快加载
+        user.get().getRoles().forEach(System.err::println);
+    }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -23,7 +24,7 @@ public class Role implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
     @JsonIgnore
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     public Role() {
 
