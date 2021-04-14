@@ -24,19 +24,19 @@ class RoleRepositoryTest {
 
     @Test
     @Transactional
-    //@Rollback(value = false)
+        //@Rollback(value = false)
     void test1() {
         User user = new User();
-        user.setUserId(1l);
+        user.setUserId(1L);
         user.setUsername("username1");
 
         Role role = new Role();
         role.setRoleName("roleName1");
-        role.setRoleId(1l);
+        role.setRoleId(1L);
 
         Role role1 = new Role();
         role1.setRoleName("roleName2");
-        role1.setRoleId(2l);
+        role1.setRoleId(2L);
 
         Set<Role> roles = new HashSet<>();
         roles.add(role);
@@ -64,15 +64,11 @@ class RoleRepositoryTest {
     @Rollback(value = false)
     void test3() {
         User user = new User();
-        user.setUserId(2l);
+        user.setUserId(2L);
         user.setUsername("username2");
 
         List<Role> roleList = roleRepository.findAll();
-        int i = 1;
-        Set<Role> roles = new HashSet<>();
-        for (Role r : roleList) {
-            roles.add(r);
-        }
+        Set<Role> roles = new HashSet<>(roleList);
 
         user.setRoles(roles);
         userRepository.save(user);
@@ -81,16 +77,16 @@ class RoleRepositoryTest {
     @Test
     @Transactional
     void test4() {
-        userRepository.deleteById(3l);
+        userRepository.deleteById(3L);
     }
 
     @Test
     @Transactional
     void test5() {
-        User user = userRepository.getOne(3l);
+        User user = userRepository.getOne(3L);
         Set<Role> roles = user.getRoles();
         for (Role r:
-             roles) {
+                roles) {
             System.err.println(r);
         }
 
@@ -99,7 +95,7 @@ class RoleRepositoryTest {
     @Test
     @Transactional//No session
     void test6() {
-        Role role = roleRepository.getOne(1l);
+        Role role = roleRepository.getOne(1L);
         Set<User> users = role.getUsers();
         users.forEach(System.err::print);
     }
@@ -109,12 +105,12 @@ class RoleRepositoryTest {
     @Rollback(value = false)
     void test7() {
         User user = new User();
-        user.setUserId(11l);
+        user.setUserId(11L);
         user.setUsername("name");
         Role role1 = new Role();
-        role1.setRoleId(11l);
+        role1.setRoleId(11L);
         Role role2 = new Role();
-        role2.setRoleId(12l);
+        role2.setRoleId(12L);
         // 空指针问题 多半是Set集合中没有new
         // private Set<xxx> xxx = new HashSet();
         user.addRole(role1);
@@ -126,19 +122,38 @@ class RoleRepositoryTest {
     @Test
     @Transactional//No session
     void test8() {
-        User user = userRepository.getOne(1l);
+        User user = userRepository.getOne(1L);
         Set<Role> roleSet = new HashSet<>();
         for (Role r:
-             user.getRoles()) {
+                user.getRoles()) {
             roleSet.add(r);
         }
         roleSet.forEach(System.err::println);
     }
 
-    @Test
+    @Test         //getOne()懒加载 findById()快加载
     @Transactional//No session
     void test9() {
-        Optional<User> user = userRepository.findById(1l);//getOne()懒加载 findById()快加载
+        Optional<User> user = userRepository.findById(1L);
+        System.err.println(user.isPresent());// true or false
         user.get().getRoles().forEach(System.err::println);
+    }
+
+    @Test           //getOne()懒加载 findById()快加载
+    @Transactional  //No session
+    void test10() {
+        User user = userRepository.getOne(1L);
+        System.err.println(user);
+        for (Role r:
+                user.getRoles()) {
+            System.err.println(r);
+        }
+        /**
+         * Hibernate: insert into user_role (user_id, role_id) values (?, ?)
+         * user.addRole(roleRepository.getOne(3L));
+         *
+         * user.getRoles().remove(roleRepository.getOne(3L));
+         * Hibernate: delete from user_role where user_id=? and role_id=?
+         */
     }
 }
