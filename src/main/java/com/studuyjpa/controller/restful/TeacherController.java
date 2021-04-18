@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author y'l'l
+ */
 @RestController
-public class TeacherControlle {
+public class TeacherController {
 
     @Autowired
     TeacherServiceImpl teacherService;
