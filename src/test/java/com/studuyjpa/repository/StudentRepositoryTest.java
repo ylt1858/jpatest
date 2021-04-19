@@ -52,7 +52,7 @@ class StudentRepositoryTest {
     @Test
     @Transactional
     public void deleteStudent(){
-      studentRepository.deleteById(5l);
+        studentRepository.deleteById(5L);
 //        studentRepository.deleteAll();
     }
 
@@ -60,8 +60,8 @@ class StudentRepositoryTest {
     @Transactional
     @Rollback(value = false)
     public void withStudentAddTeacherId(){
-        Student one = studentRepository.getOne(3l);
-        one.setTeacher(teacherRepository.getOne(1l));
+        Student one = studentRepository.getOne(3L);
+        one.setTeacher(teacherRepository.getOne(1L));
         System.err.println(one);
         studentRepository.save(one);
     }
@@ -69,8 +69,8 @@ class StudentRepositoryTest {
     @Test
     @Transactional
     public void getStudentById(){
-        Optional<Student> student = studentRepository.findById(1l);
+        Optional<Student> student = studentRepository.findById(1L);
         System.err.println(student);
-        System.err.println(student.get().getName());
+        student.ifPresent(value -> System.err.println(value.getName()));
     }
 }

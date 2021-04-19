@@ -23,8 +23,8 @@ class UserRepositoryTest {
     @Test
     @Transactional
     void test1() {
-        User one = userRepository.getOne(1l);
-        Role role = roleRepository.getOne(11l);
+        User one = userRepository.getOne(1L);
+        Role role = roleRepository.getOne(11L);
         one.addRole(role);
         one.getRoles().forEach(System.err::println);
     }

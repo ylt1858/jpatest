@@ -15,13 +15,10 @@ import java.io.IOException;
  */
 @Controller
 public class FileController {
-    public static void main(String[] args) {
-        System.err.println(System.getProperty("user.dir"));
-    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileController.class);
 
-    @RequestMapping("/upload")
+    @GetMapping("/upload")
     public String upload() {
         return "upload";
     }
@@ -34,11 +31,12 @@ public class FileController {
         }
 
         String fileName = file.getOriginalFilename();
-        //String UPLOAD_DIR = "/Users/itinypocket/workspace/temp/"; D:\BaiduNetdiskDownload\jpa
         String UPLOAD_DIR = System.getProperty("user.dir") + "\\upload\\";
         File dest = new File(UPLOAD_DIR + fileName);
         try {
+            // 主要代码
             file.transferTo(dest);
+
             LOGGER.info("上传成功");
             return "上传成功";
         } catch (IOException e) {

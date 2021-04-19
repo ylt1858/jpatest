@@ -47,4 +47,13 @@ class TeacherRepositoryTest {
         one.getStudents().forEach(System.err::println);
         System.err.println(one.getName());
     }
+
+    @Test
+    @Transactional
+    void findByNameLikeTest() {
+        List<Teacher> byNameLike = teacherRepository.findByNameLike("%");
+        for (Teacher teacher : byNameLike) {
+            System.err.println(teacher);
+        }
+    }
 }
