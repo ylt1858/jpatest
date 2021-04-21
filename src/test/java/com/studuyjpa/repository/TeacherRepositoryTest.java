@@ -37,13 +37,13 @@ class TeacherRepositoryTest {
 
     @Test
     void deleteTeacher() {
-        teacherRepository.deleteById(8l);
+        teacherRepository.deleteById(8L);
     }
 
     @Test
     @Transactional
     public void getTeacherById(){
-        Teacher one = teacherRepository.getOne(1l);
+        Teacher one = teacherRepository.getOne(1L);
         one.getStudents().forEach(System.err::println);
         System.err.println(one.getName());
     }
