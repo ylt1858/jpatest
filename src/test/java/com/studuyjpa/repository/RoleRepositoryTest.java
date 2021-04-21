@@ -123,11 +123,7 @@ class RoleRepositoryTest {
     @Transactional//No session
     void test8() {
         User user = userRepository.getOne(1L);
-        Set<Role> roleSet = new HashSet<>();
-        for (Role r:
-                user.getRoles()) {
-            roleSet.add(r);
-        }
+        Set<Role> roleSet = new HashSet<>(user.getRoles());
         roleSet.forEach(System.err::println);
     }
 
@@ -136,7 +132,7 @@ class RoleRepositoryTest {
     void test9() {
         Optional<User> user = userRepository.findById(1L);
         System.err.println(user.isPresent());// true or false
-        user.get().getRoles().forEach(System.err::println);
+        user.ifPresent(value -> value.getRoles().forEach(System.err::println));
     }
 
     @Test           //getOne()懒加载 findById()快加载
