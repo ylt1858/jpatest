@@ -15,7 +15,7 @@ public interface PeopleRepository extends JpaRepository<People, Long> {
      * findMaxLeng
      * @return Integer
      */
-    @Query(value = "select max(People.length) from People "
+    @Query(value = "select max(People.length) from People where People.weigh<95"
             ,nativeQuery = true)
     Integer findMaxLength();
 }
