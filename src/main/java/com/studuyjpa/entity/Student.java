@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
+/**
+ * @author ylt
+ */
 @Entity
 public class Student implements Serializable {
 
@@ -71,5 +75,25 @@ public class Student implements Serializable {
                 ", sex=" + sex +
 //                ", teacherId=" + teacher.getId() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Student student = (Student) o;
+        return sex == student.sex &&
+                Objects.equals(sno, student.sno) &&
+                Objects.equals(name, student.name) &&
+                Objects.equals(teacher, student.teacher);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sno, name, sex, teacher);
     }
 }
